@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 def minOperations(n):
-    """ minimun operations, returns int """
-
+    """
+    minimun operations, returns int
+    """
 
     if (n <= 1):
         return 0
