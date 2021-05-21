@@ -71,3 +71,4 @@ void print_g(int grid[3][3])
 		printf("\n");
 	}
 }
+
