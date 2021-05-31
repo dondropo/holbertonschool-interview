@@ -1,74 +1,31 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "lists.h"
 
 /**
- * print_listint - prints all elements of a listint_t list
- * @h: pointer to head of list
- * Return: number of nodes
+ * is_palindrome_recursion - function that checks if a singly is a palindrome
+ * @h: double pointer to head of list
+ * @tmp: pointer to travel the list recursively
+ * Return: 0 if it is not a palindrome, 1 if it is a palindrome
  */
-size_t print_listint(const listint_t *h)
+int is_palindrome_recursion(listint_t **h, listint_t *tmp)
 {
-	const listint_t *current;
-	unsigned int n; /* number of nodes */
+	int res;
 
-	current = h;
-	n = 0;
-	while (current != NULL)
-	{
-		printf("%i\n", current->n);
-		current = current->next;
-		n++;
-	}
-
-	return (n);
+	if (tmp == NULL)
+		return (1);
+	res = is_palindrome_recursion(h, tmp->next);
+	if (tmp->n != (*h)->n)
+		return (0);
+	(*h) = (*h)->next;
+	return (res);
 }
-
 /**
- * add_nodeint_end - adds a new node at the end of a listint_t list
- * @head: pointer to pointer of first node of listint_t list
- * @n: integer to be included in new node
- * Return: address of the new element or NULL if it fails
+ * is_palindrome - function that checks if a singly linked list is a palindrome
+ * @head: pointer to head of list
+ * Return: 0 if it is not a palindrome, 1 if it is a palindrome
  */
-listint_t *add_nodeint_end(listint_t **head, const int n)
+int is_palindrome(listint_t **head)
 {
-	listint_t *new;
-	listint_t *current;
+	listint_t *h = *head;
 
-	current = *head;
-
-	new = malloc(sizeof(listint_t));
-	if (new == NULL)
-		return (NULL);
-
-	new->n = n;
-	new->next = NULL;
-
-	if (*head == NULL)
-		*head = new;
-	else
-	{
-		while (current->next != NULL)
-			current = current->next;
-		current->next = new;
-	}
-
-	return (new);
-}
-
-/**
- * free_listint - frees a listint_t list
- * @head: pointer to list to be freed
- * Return: void
- */
-void free_listint(listint_t *head)
-{
-	listint_t *current;
-
-	while (head != NULL)
-	{
-		current = head;
-		head = head->next;
-		free(current);
-	}
+	return (is_palindrome_recursion(&h, *head));
 }
